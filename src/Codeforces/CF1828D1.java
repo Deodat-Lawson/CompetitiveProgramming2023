@@ -61,7 +61,7 @@ public class CF1828D1 {
                         dp[j][j+i] = dp[j][j+i-1];
                     }
                     else{
-                        dp[j][j+i] = i;
+                        dp[j][j+i] = dp[j+1][j+i-1] + 2;
                     }
                 }
             }
