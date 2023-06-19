@@ -17,6 +17,23 @@ public class CF1834D {
 
     public static void solve() throws IOException {
         //Todo: write your implementation
+        int n = nextInt();
+        int m = nextInt();
+
+        ArrayList<CF1834DfPair> sortByFront = new ArrayList<>();
+        ArrayList<CF1834DePair> sortByEnd = new ArrayList<>();
+        ArrayList<CF1834DsPair> sortBySmallestL = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            int start = nextInt();
+            int end = nextInt();
+            CF1834DfPair thisPf = new CF1834DfPair(start,end);
+            CF1834DePair thisPe = new CF1834DePair(start, end);
+            CF1834DsPair thisPs = new CF1834DsPair(start,end);
+            sortByFront.add(thisPf);
+            sortByEnd.add(thisPe);
+            sortBySmallestL.add(thisPs);
+        }
 
     }
 
@@ -51,49 +68,49 @@ public class CF1834D {
 }
 
 
-class CF1834DPair{
+class CF1834DPair {
     int start, end;
-    CF1834DPair(int s, int e){
+
+    CF1834DPair(int s, int e) {
         start = s;
         end = e;
     }
 }
 
-class CF1834DfPair extends CF1834DPair implements Comparable<CF1834DfPair>{
+class CF1834DfPair extends CF1834DPair implements Comparable<CF1834DfPair> {
 
     CF1834DfPair(int s, int e) {
         super(s, e);
     }
 
     @Override
-    public int compareTo( CF1834DfPair o) {
-        return 0;
+    public int compareTo(CF1834DfPair o) {
+        return Integer.compare(start,o.start);
     }
 }
 
-class CF1834DePair extends CF1834DPair implements Comparable<CF1834DePair>{
+class CF1834DePair extends CF1834DPair implements Comparable<CF1834DePair> {
 
     CF1834DePair(int s, int e) {
         super(s, e);
     }
 
     @Override
-    public int compareTo( CF1834DePair o) {
-        return 0;
+    public int compareTo(CF1834DePair o) {
+        return Integer.compare(end, o.end);
     }
 }
 
 
-class CF1834DsPair extends CF1834DPair implements Comparable<CF1834DsPair>{
-
+class CF1834DsPair extends CF1834DPair implements Comparable<CF1834DsPair> {
+    int l;
     CF1834DsPair(int s, int e) {
         super(s, e);
+        l= e - s + 1;
     }
 
     @Override
-    public int compareTo( CF1834DsPair o) {
-        return 0;
+    public int compareTo(CF1834DsPair o) {
+        return Integer.compare(l, o.l);
     }
 }
-
-
