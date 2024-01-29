@@ -18,9 +18,6 @@ public class movieNight {
   public static void solve() throws IOException {
     //Todo: write your implementation
 
-
-
-
   }
 
   static String next() throws IOException {
