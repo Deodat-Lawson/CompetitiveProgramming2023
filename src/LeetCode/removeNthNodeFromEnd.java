@@ -3,7 +3,7 @@ package LeetCode;
 import java.io.*;
 import java.util.*;
 
-public class search2DMatrix {
+public class removeNthNodeFromEnd {
 
   static BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
   static StringTokenizer tok;
@@ -19,39 +19,46 @@ public class search2DMatrix {
     //Todo: write your implementation
   }
 
-  public boolean searchMatrix(int[][] matrix, int target) {
-    //search for the correct row
-    int left = 0;
-    int right = matrix.length - 1;
-    int ans = 0;
-    while (left <= right) {
-      int mid = (left + right) / 2;
-      if (matrix[mid][0] < target) {
-        left = mid + 1;
-        ans = Math.max(0, mid);
-      } else if(matrix[mid][0] > target){
-        right = mid - 1;
+  class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+      int size = 0;
+      ListNode a = head;
+      while(a != null){
+        a = a.next;
+        size++;
       }
-      else{
-        return true;
+
+      int rem = size - n - 1;
+      if(rem < 0){
+        return head.next;
       }
+      ListNode ln = head;
+      for (int i = 0; i < rem; i++) {
+        ln = ln.next;
+      }
+      ln.next = ln.next.next;
+
+      return head;
+
+    }
+  }
+
+
+  public class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
     }
 
-    left = 0;
-    right = matrix[0].length - 1;
-    while (left <= right) {
-      int mid = (left + right) / 2;
-      if (matrix[ans][mid] < target) {
-        left = mid + 1;
-      } else if (matrix[ans][mid] > target) {
-        right = mid - 1;
-      } else {
-        return true;
-      }
+    ListNode(int val) {
+      this.val = val;
     }
 
-    return false;
-
+    ListNode(int val, ListNode next) {
+      this.val = val;
+      this.next = next;
+    }
   }
 
   static String next() throws IOException {

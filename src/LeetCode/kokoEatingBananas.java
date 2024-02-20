@@ -3,7 +3,7 @@ package LeetCode;
 import java.io.*;
 import java.util.*;
 
-public class search2DMatrix {
+public class kokoEatingBananas {
 
   static BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
   static StringTokenizer tok;
@@ -17,42 +17,34 @@ public class search2DMatrix {
 
   public static void solve() throws IOException {
     //Todo: write your implementation
+
+    int[] a = {805306368,805306368,805306368};
+    minEatingSpeed(a, 100000000);
   }
 
-  public boolean searchMatrix(int[][] matrix, int target) {
-    //search for the correct row
-    int left = 0;
-    int right = matrix.length - 1;
-    int ans = 0;
+  public static int minEatingSpeed(int[] piles, int h) {
+    long left = 1;
+    long right = Long.MAX_VALUE;
+    long ans = Long.MAX_VALUE;
     while (left <= right) {
-      int mid = (left + right) / 2;
-      if (matrix[mid][0] < target) {
-        left = mid + 1;
-        ans = Math.max(0, mid);
-      } else if(matrix[mid][0] > target){
+      long mid = left + (right - left) / 2;
+      long count = 0;
+
+      for (int i = 0; i < piles.length; i++) {
+        count += (long) Math.ceil((double) piles[i] / (double) mid);
+      }
+
+      if(count <= h){
+        ans = Math.min(ans, mid);
         right = mid - 1;
       }
       else{
-        return true;
-      }
-    }
-
-    left = 0;
-    right = matrix[0].length - 1;
-    while (left <= right) {
-      int mid = (left + right) / 2;
-      if (matrix[ans][mid] < target) {
         left = mid + 1;
-      } else if (matrix[ans][mid] > target) {
-        right = mid - 1;
-      } else {
-        return true;
       }
     }
-
-    return false;
-
+    return (int)ans;
   }
+
 
   static String next() throws IOException {
     while (tok == null || !tok.hasMoreTokens()) {

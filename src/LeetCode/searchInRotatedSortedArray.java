@@ -3,7 +3,7 @@ package LeetCode;
 import java.io.*;
 import java.util.*;
 
-public class search2DMatrix {
+public class searchInRotatedSortedArray {
 
   static BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
   static StringTokenizer tok;
@@ -15,43 +15,60 @@ public class search2DMatrix {
     }
   }
 
-  public static void solve() throws IOException {
-    //Todo: write your implementation
-  }
-
-  public boolean searchMatrix(int[][] matrix, int target) {
-    //search for the correct row
+  public int search(int[] nums, int target) {
+    //find the starting element, then run two binary search to try find the element
     int left = 0;
-    int right = matrix.length - 1;
-    int ans = 0;
-    while (left <= right) {
-      int mid = (left + right) / 2;
-      if (matrix[mid][0] < target) {
-        left = mid + 1;
-        ans = Math.max(0, mid);
-      } else if(matrix[mid][0] > target){
+    int right = nums.length - 1;
+    int startingIndex = -1;
+    while(left <= right){
+      int mid = (left + right)/2;
+      if(nums[mid] == target){
+        return mid;
+      }
+      if(nums[mid] <= nums[nums.length - 1]){
+        startingIndex = mid;
         right = mid - 1;
       }
       else{
-        return true;
+        left = mid + 1;
+      }
+    }
+
+    left = startingIndex;
+    right = nums.length - 1;
+    while(left <= right){
+      int mid = (left + right)/2;
+      if(nums[mid] < target){
+        left = mid + 1;
+      }
+      else if(nums[mid] > target){
+        right = mid - 1;
+      }
+      else{
+        return mid;
       }
     }
 
     left = 0;
-    right = matrix[0].length - 1;
-    while (left <= right) {
-      int mid = (left + right) / 2;
-      if (matrix[ans][mid] < target) {
+    right = startingIndex - 1;
+    while(left <= right){
+      int mid = (left + right)/2;
+      if(nums[mid] < target){
         left = mid + 1;
-      } else if (matrix[ans][mid] > target) {
+      }
+      else if(nums[mid] > target){
         right = mid - 1;
-      } else {
-        return true;
+      }
+      else{
+        return mid;
       }
     }
+    return -1;
 
-    return false;
+  }
 
+  public static void solve() throws IOException {
+    //Todo: write your implementation
   }
 
   static String next() throws IOException {

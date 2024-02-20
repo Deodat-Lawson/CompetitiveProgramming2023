@@ -3,7 +3,7 @@ package LeetCode;
 import java.io.*;
 import java.util.*;
 
-public class search2DMatrix {
+public class findMinInRotatedSortedArray {
 
   static BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
   static StringTokenizer tok;
@@ -19,39 +19,21 @@ public class search2DMatrix {
     //Todo: write your implementation
   }
 
-  public boolean searchMatrix(int[][] matrix, int target) {
-    //search for the correct row
+  public int findMin(int[] nums) {
     int left = 0;
-    int right = matrix.length - 1;
-    int ans = 0;
+    int right = nums.length - 1;
+    int ans = Integer.MAX_VALUE;
     while (left <= right) {
-      int mid = (left + right) / 2;
-      if (matrix[mid][0] < target) {
-        left = mid + 1;
-        ans = Math.max(0, mid);
-      } else if(matrix[mid][0] > target){
+      int mid = (left + right)/2;
+      if(nums[mid] <= nums[nums.length - 1]){
+        ans = Math.min(ans, nums[mid]);
         right = mid - 1;
       }
       else{
-        return true;
-      }
-    }
-
-    left = 0;
-    right = matrix[0].length - 1;
-    while (left <= right) {
-      int mid = (left + right) / 2;
-      if (matrix[ans][mid] < target) {
         left = mid + 1;
-      } else if (matrix[ans][mid] > target) {
-        right = mid - 1;
-      } else {
-        return true;
       }
     }
-
-    return false;
-
+    return ans;
   }
 
   static String next() throws IOException {
