@@ -2,56 +2,65 @@ package LeetCode;
 import java.util.ArrayList;
 import java.util.List;
 public class reorderList {
-  class Solution {
-    public void reorderList(ListNode head) {
-      ArrayList<Integer> nodes = new ArrayList<>();
-      while(head != null){
-        nodes.add(head.val);
-        head = head.next;
-      }
-      ListNode newHead = null;
-      ListNode current = null;
 
-      for (int i = 0; i < nodes.size()/2; i++) {
+  public static void main(String[] args) {
+    Solution sol = new Solution();
+    ListNode n1 = new ListNode(1);
+    ListNode n2 = new ListNode(2);
+    ListNode n3 = new ListNode(3);
+    ListNode n4 = new ListNode(4);
+    n1.next = n2;
+    n2.next = n3;
+    n3.next = n4;
+
+    sol.reorderList(n1);
+  }
+  static class Solution {
+    public void reorderList(ListNode head) {
+      if(head == null){
+        return;
+      }
+
+      ArrayList<ListNode> nodes = new ArrayList<>();
+      ListNode n = head;
+      while (n != null) {
+        nodes.add(n);
+        n = n.next;
+      }
+
+      ListNode current = head;
+      int count = 1;
+
+      for (int i = 0; i <= nodes.size() / 2; i++) { //0,3,1,2
         int currVal = i;
         int currOpp = nodes.size() - 1 - i;
 
-        if(newHead == null){
-          newHead = new ListNode(nodes.get(currVal));
-          current = newHead;
-        }
-        else{
-          current.next = new ListNode(nodes.get(currVal));
+        if (!current.equals(nodes.get(currVal))) {
+          current.next = nodes.get(currVal);
           current = current.next;
+          count++;
         }
-
-        if(currVal != currOpp){
-          current.next = new ListNode(nodes.get(currOpp));
+        if(count == nodes.size()){
+          break;
+        }
+        if (!current.equals(nodes.get(currOpp))) {
+          current.next = nodes.get(currOpp);
           current = current.next;
+          count++;
+        }
+        if(count == nodes.size()){
+          break;
         }
 
       }
-
-      head = newHead;
-
-      while(head != null){
-        System.out.println(head.val);
-        head = head.next;
-      }
-
-
-    }
-
-    public void swap(ListNode a, ListNode b){
-      a.next;
-
+      current.next = null;
 
     }
   }
 
 
 
-  class ListNode {
+  static class ListNode {
     int val;
     ListNode next;
     ListNode() {
